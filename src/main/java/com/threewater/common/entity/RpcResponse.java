@@ -21,7 +21,7 @@ public class RpcResponse implements Serializable {
     private String requestId;
 
     /**
-     * 请求调用的方法的返回值
+     * 请求服务调用的方法的返回值
      */
     private Object returnValue;
 

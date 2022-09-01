@@ -41,5 +41,4 @@ public class ThreewaterRpcProperties {
      */
     private Integer weight = 1;
 
-
 }

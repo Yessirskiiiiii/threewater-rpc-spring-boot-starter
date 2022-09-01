@@ -25,17 +25,17 @@ public class RpcRequest implements Serializable {
     private String serviceName;
 
     /**
-     * 请求调用的方法
+     * 请求服务调用的方法名
      */
     private String method;
 
     /**
-     * 请求调用的方法的参数类型
+     * 请求服务调用的方法的参数类型
      */
     private Class<?>[] parameterTypes;
 
     /**
-     * 请求调用的方法的参数
+     * 请求服务调用的方法的参数
      */
     private Object[] parameters;
 

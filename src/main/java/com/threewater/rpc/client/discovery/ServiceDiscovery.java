@@ -16,6 +16,6 @@ public interface ServiceDiscovery {
      * @param name 服务名
      * @return 服务列表
      */
-    List<Service> findServiceList(String name);
+    List<Service> findServiceList(String name) throws Exception;
 
 }
