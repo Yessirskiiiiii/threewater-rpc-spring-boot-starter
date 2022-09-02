@@ -1,6 +1,7 @@
 package com.threewater.rpc.client.net;
 
 import com.threewater.common.entity.RpcRequest;
+import com.threewater.common.entity.RpcResponse;
 import com.threewater.common.entity.Service;
 import com.threewater.common.protocol.MessageProtocol;
 
@@ -11,6 +12,6 @@ import com.threewater.common.protocol.MessageProtocol;
  */
 public interface RpcClient {
 
-    Object sendRequest(RpcRequest rpcRequest, Service service, MessageProtocol messageProtocol);
+    RpcResponse sendRequest(RpcRequest rpcRequest, Service service, MessageProtocol messageProtocol);
 
 }
