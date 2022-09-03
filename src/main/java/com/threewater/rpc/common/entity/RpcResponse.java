@@ -1,6 +1,6 @@
-package com.threewater.common.entity;
+package com.threewater.rpc.common.entity;
 
-import com.threewater.common.constants.RpcStatus;
+import com.threewater.rpc.common.constants.RpcStatus;
 import lombok.Getter;
 import lombok.Setter;
 

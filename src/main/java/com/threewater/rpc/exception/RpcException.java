@@ -1,4 +1,4 @@
-package com.threewater.exception;
+package com.threewater.rpc.exception;
 
 /**
  * @Author: ThreeWater

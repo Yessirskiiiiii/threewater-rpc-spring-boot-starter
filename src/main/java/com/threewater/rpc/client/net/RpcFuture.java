@@ -1,7 +1,5 @@
 package com.threewater.rpc.client.net;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.concurrent.*;
 
 /**
@@ -57,6 +55,7 @@ public class RpcFuture<T> implements Future<T> {
 
     public void setResponse(T response) {
         this.response = response;
+        // 表明通道建立，唤醒发送请求的线程
         countDownLatch.countDown();
     }
 

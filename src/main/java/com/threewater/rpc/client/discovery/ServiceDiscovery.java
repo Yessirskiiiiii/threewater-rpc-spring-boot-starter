@@ -1,6 +1,6 @@
 package com.threewater.rpc.client.discovery;
 
-import com.threewater.common.entity.Service;
+import com.threewater.rpc.common.entity.Service;
 
 import java.util.List;
 

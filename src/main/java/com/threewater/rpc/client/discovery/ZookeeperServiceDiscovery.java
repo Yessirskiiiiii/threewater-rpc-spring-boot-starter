@@ -1,8 +1,8 @@
 package com.threewater.rpc.client.discovery;
 
 import com.alibaba.fastjson.JSON;
-import com.threewater.common.constants.RpcConstant;
-import com.threewater.common.entity.Service;
+import com.threewater.rpc.common.constants.RpcConstant;
+import com.threewater.rpc.common.entity.Service;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;

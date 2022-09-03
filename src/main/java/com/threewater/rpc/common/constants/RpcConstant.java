@@ -1,4 +1,4 @@
-package com.threewater.common.constants;
+package com.threewater.rpc.common.constants;
 
 /**
  * @Author: ThreeWater

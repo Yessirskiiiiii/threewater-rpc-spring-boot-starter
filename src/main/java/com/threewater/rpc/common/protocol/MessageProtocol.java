@@ -1,7 +1,7 @@
-package com.threewater.common.protocol;
+package com.threewater.rpc.common.protocol;
 
-import com.threewater.common.entity.RpcRequest;
-import com.threewater.common.entity.RpcResponse;
+import com.threewater.rpc.common.entity.RpcRequest;
+import com.threewater.rpc.common.entity.RpcResponse;
 
 /**
  * @Author: ThreeWater

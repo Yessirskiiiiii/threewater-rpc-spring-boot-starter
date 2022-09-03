@@ -1,4 +1,4 @@
-package com.threewater.common.entity;
+package com.threewater.rpc.common.entity;
 
 import lombok.*;
 

@@ -1,11 +1,11 @@
 package com.threewater.rpc.client.net;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.threewater.common.entity.RpcRequest;
-import com.threewater.common.entity.RpcResponse;
-import com.threewater.common.entity.Service;
-import com.threewater.common.protocol.MessageProtocol;
-import com.threewater.rpc.client.net.handler.SendHandler;
+import com.threewater.rpc.common.entity.RpcRequest;
+import com.threewater.rpc.common.entity.RpcResponse;
+import com.threewater.rpc.common.entity.Service;
+import com.threewater.rpc.common.protocol.MessageProtocol;
+import com.threewater.rpc.client.net.handler.NettyRpcClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -20,17 +20,22 @@ import java.util.concurrent.*;
 /**
  * @Author: ThreeWater
  * @Date: 2022/09/01/15:56
- * @Description:
+ * @Description: Netty Rpc 客户端
  */
 public class NettyRpcClient implements RpcClient {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyRpcClient.class);
 
     // 利用线程池异步创建 RPC 客户端
-    private static final ExecutorService threadPool = new ThreadPoolExecutor(4, 10, 200,
-            TimeUnit.SECONDS, new LinkedBlockingQueue<>(1000), new ThreadFactoryBuilder()
-            .setNameFormat("rpcClient-%d")
-            .build());
+    private static final ExecutorService threadPool = new ThreadPoolExecutor(
+            4,
+            10,
+            200,
+            TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(1000),
+            new ThreadFactoryBuilder()
+                    .setNameFormat("rpcClient-%d")
+                    .build());
 
     // 创建 Netty 的事件循环组
     private final EventLoopGroup loopGroup = new NioEventLoopGroup(4);
@@ -40,7 +45,7 @@ public class NettyRpcClient implements RpcClient {
      * key：服务地址，格式：ip:port
      * value：SendHandler
      */
-    public static Map<String, SendHandler> connectedServerNodes = new ConcurrentHashMap<>();
+    public static Map<String, NettyRpcClientHandler> connectedServerNodes = new ConcurrentHashMap<>();
 
     /**
      * 发送请求
@@ -57,7 +62,7 @@ public class NettyRpcClient implements RpcClient {
         synchronized (address) {
             // 请求地址（ip+port）如果在 connectedServerNodes 中存在则使用 connectedServerNodes 中的 handler 处理不再重新建立连接
             if (connectedServerNodes.containsKey(address)) {
-                SendHandler handler = connectedServerNodes.get(address);
+                NettyRpcClientHandler handler = connectedServerNodes.get(address);
                 logger.info("使用现有的连接");
                 return handler.sendRequest(rpcRequest);
             }
@@ -65,7 +70,7 @@ public class NettyRpcClient implements RpcClient {
             String[] addrInfo = address.split(":");
             final String serverAddress = addrInfo[0];
             final String serverPort = addrInfo[1];
-            final SendHandler handler = new SendHandler(messageProtocol, address);
+            final NettyRpcClientHandler RPC_HANDLER = new NettyRpcClientHandler(messageProtocol, address);
             threadPool.submit(() -> {
                 // 进行客户端的配置
                 Bootstrap bootstrap = new Bootstrap();
@@ -75,7 +80,7 @@ public class NettyRpcClient implements RpcClient {
                             @Override
                             protected void initChannel(SocketChannel socketChannel) throws Exception {
                                 ChannelPipeline pipeline = socketChannel.pipeline();
-                                pipeline.addLast(handler);
+                                pipeline.addLast(RPC_HANDLER);
                             }
                         });
                 // 启用客户端连接
@@ -84,12 +89,12 @@ public class NettyRpcClient implements RpcClient {
                     @Override
                     public void operationComplete(ChannelFuture channelFuture) throws Exception {
                         // 将地址和 handler 缓存到 connectedServerNodes 中方便复用
-                        connectedServerNodes.put(address, handler);
+                        connectedServerNodes.put(address, RPC_HANDLER);
                     }
                 });
             });
             logger.info("使用新的连接..........");
-            return handler.sendRequest(rpcRequest);
+            return RPC_HANDLER.sendRequest(rpcRequest);
         }
 
     }

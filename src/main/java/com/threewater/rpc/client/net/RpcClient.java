@@ -1,9 +1,9 @@
 package com.threewater.rpc.client.net;
 
-import com.threewater.common.entity.RpcRequest;
-import com.threewater.common.entity.RpcResponse;
-import com.threewater.common.entity.Service;
-import com.threewater.common.protocol.MessageProtocol;
+import com.threewater.rpc.common.entity.RpcRequest;
+import com.threewater.rpc.common.entity.RpcResponse;
+import com.threewater.rpc.common.entity.Service;
+import com.threewater.rpc.common.protocol.MessageProtocol;
 
 /**
  * @Author: ThreeWater
