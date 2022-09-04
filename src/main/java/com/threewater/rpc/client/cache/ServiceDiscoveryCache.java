@@ -2,6 +2,7 @@ package com.threewater.rpc.client.cache;
 
 import com.threewater.rpc.common.entity.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,6 +20,11 @@ public class ServiceDiscoveryCache {
      * value: 服务列表
      */
     private static final Map<String, List<Service>> SERVICE_MAP = new ConcurrentHashMap<>();
+
+    /**
+     * 客户端注入的远程服务 service class
+     */
+    public static final List<String> SERVICE_CLASS_NAMES = new ArrayList<>();
 
     /**
      * 添加至本地缓存

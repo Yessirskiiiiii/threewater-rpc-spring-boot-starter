@@ -38,7 +38,7 @@ public class RequestHandler {
             response = new RpcResponse(RpcStatus.NOT_FOUND);
         } else {
             try {
-                // 3. 反射调用对应服务的对应方法
+                // 3. 反射调用服务的对应方法
                 Method method = serviceObject.getClazz().getMethod(request.getMethod(), request.getParameterTypes());
                 Object returnValue = method.invoke(serviceObject.getObj(), request.getParameters());
                 response = new RpcResponse(RpcStatus.SUCCESS);

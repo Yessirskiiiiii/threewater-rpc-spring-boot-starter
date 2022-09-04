@@ -1,5 +1,9 @@
 package com.threewater.rpc.common.protocol;
 
+import com.threewater.rpc.annotation.MessageProtocolAno;
+import com.threewater.rpc.common.constants.LoadBalanceConstant;
+import com.threewater.rpc.common.constants.MessageProtocolConstant;
+import com.threewater.rpc.common.constants.RpcConstant;
 import com.threewater.rpc.common.entity.RpcRequest;
 import com.threewater.rpc.common.entity.RpcResponse;
 
@@ -10,6 +14,7 @@ import java.io.*;
  * @Date: 2022/09/02/20:37
  * @Description: Java 序列化消息协议
  */
+@MessageProtocolAno(value = MessageProtocolConstant.PROTOCOL_JAVA)
 public class JavaSerializeMessageProtocol implements MessageProtocol {
     @Override
     public byte[] encodeRequest(RpcRequest request) throws Exception {
