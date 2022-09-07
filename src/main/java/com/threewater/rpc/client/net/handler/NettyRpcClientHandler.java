@@ -60,6 +60,11 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
         latch.countDown();
     }
 
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        logger.debug("Connect to server successfully:{}", ctx);
+    }
+
     /**
      * 读取数据，同时进行响应消息的解码，将响应结果放入对应的 RpcFuture 中，并释放计时器锁
      */
@@ -104,7 +109,7 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
     }
 
     public RpcResponse sendRequest(RpcRequest rpcRequest) {
-        RpcResponse response = null;
+        RpcResponse response;
         RpcFuture<RpcResponse> future = new RpcFuture<>();
         requestMap.put(rpcRequest.getRequestId(), future);
         try {
@@ -115,6 +120,8 @@ public class NettyRpcClientHandler extends ChannelInboundHandlerAdapter {
                 channel.writeAndFlush(reqBuf);
                 // 等待响应
                 response = future.get(RESPONSE_WAIT_TIME, TimeUnit.SECONDS);
+            } else {
+                throw new RpcException("establish channel time out");
             }
         } catch (Exception e) {
             throw new RpcException(e.getMessage());

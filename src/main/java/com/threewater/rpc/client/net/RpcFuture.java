@@ -1,5 +1,7 @@
 package com.threewater.rpc.client.net;
 
+import org.springframework.lang.NonNull;
+
 import java.util.concurrent.*;
 
 /**
@@ -46,7 +48,7 @@ public class RpcFuture<T> implements Future<T> {
     }
 
     @Override
-    public T get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+    public T get(long timeout, @NonNull TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
         if (countDownLatch.await(timeout, unit)) {
             return response;
         }

@@ -12,7 +12,6 @@ import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @Author: ThreeWater
  * @Date: 2022/09/03/16:33
@@ -34,6 +33,7 @@ public class NettyRpcServer extends RpcServer {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         NettyRpcServerHandler RPC_HANDLER = new NettyRpcServerHandler();
+        RPC_HANDLER.setRequestHandler(requestHandler);
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup)
@@ -67,4 +67,5 @@ public class NettyRpcServer extends RpcServer {
     public void stop() {
         this.channel.close();
     }
+
 }

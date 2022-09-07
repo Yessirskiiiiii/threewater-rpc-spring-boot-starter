@@ -28,7 +28,7 @@ import java.util.UUID;
 @Setter
 public class ClientProxyFactory {
 
-    private ServiceDiscovery serverDiscovery;
+    private ServiceDiscovery serviceDiscovery;
 
     private RpcClient rpcClient;
 
@@ -76,7 +76,7 @@ public class ClientProxyFactory {
             MessageProtocol messageProtocol = supportMessageProtocols.get(service.getProtocol());
             RpcResponse response = rpcClient.sendRequest(request, service, messageProtocol);
             // 4. 结果处理
-            if (response == null){
+            if (response == null) {
                 throw new RpcException("the response is null");
             }
             if (response.getException() != null) {
@@ -95,7 +95,7 @@ public class ClientProxyFactory {
             synchronized (serviceName) {
                 // 先查本地缓存，缓存没有再查询 Zookeeper
                 if (ServiceDiscoveryCache.isEmpty(serviceName)) {
-                    services = serverDiscovery.findServiceList(serviceName);
+                    services = serviceDiscovery.findServiceList(serviceName);
                     if (services == null || services.size() == 0) {
                         throw new RpcException("No provider available!");
                     }

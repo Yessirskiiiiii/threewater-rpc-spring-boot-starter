@@ -24,11 +24,12 @@ public class ZookeeperServiceDiscovery implements ServiceDiscovery {
 
     private final CuratorFramework zkClient;
 
-    public ZookeeperServiceDiscovery(String zkAddress) {
+    public ZookeeperServiceDiscovery(String zkAddress) throws InterruptedException {
         // retryPolicy: 重试策略
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(3000, 10);
         zkClient = CuratorFrameworkFactory.newClient(zkAddress, retryPolicy);
         zkClient.start();
+        zkClient.blockUntilConnected();
     }
 
     /**

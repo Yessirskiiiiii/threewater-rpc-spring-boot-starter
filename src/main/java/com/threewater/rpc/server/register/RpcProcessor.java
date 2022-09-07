@@ -9,9 +9,7 @@ import com.threewater.rpc.common.constants.RpcConstant;
 import com.threewater.rpc.common.entity.ServiceObject;
 import com.threewater.rpc.server.net.RpcServer;
 import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.recipes.cache.PathChildrenCache;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
+import org.apache.curator.framework.recipes.cache.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -31,11 +29,17 @@ public class RpcProcessor implements ApplicationListener<ContextRefreshedEvent> 
 
     private static final Logger logger = LoggerFactory.getLogger(RpcProcessor.class);
 
-    private ClientProxyFactory clientProxyFactory;
+    private final ClientProxyFactory clientProxyFactory;
 
-    private ServiceRegister serviceRegister;
+    private final ServiceRegister serviceRegister;
 
-    private RpcServer rpcServer;
+    private final RpcServer rpcServer;
+
+    public RpcProcessor(ClientProxyFactory clientProxyFactory, ServiceRegister serviceRegister, RpcServer rpcServer) {
+        this.clientProxyFactory = clientProxyFactory;
+        this.serviceRegister = serviceRegister;
+        this.rpcServer = rpcServer;
+    }
 
     // 当所有的 Bean 被成功装载，即 Spring 启动完毕过后会收到一个事件通知
     @Override
@@ -124,9 +128,10 @@ public class RpcProcessor implements ApplicationListener<ContextRefreshedEvent> 
         // 由于服务端注册的是临时节点，所以如果服务端下线节点会被移除
         // 只要监听 Zookeeper 的子节点，如果新增或删除子节点就直接清空本地缓存即可
         // 避免服务端因为宕机或网络问题下线了，缓存却还在就会导致客户端请求已经不可用的服务端，增加请求失败率
-        if (clientProxyFactory.getServerDiscovery() instanceof ZookeeperServiceDiscovery) {
-            ZookeeperServiceDiscovery serviceDiscovery = (ZookeeperServiceDiscovery) clientProxyFactory.getServerDiscovery();
+        if (clientProxyFactory.getServiceDiscovery() instanceof ZookeeperServiceDiscovery) {
+            ZookeeperServiceDiscovery serviceDiscovery = (ZookeeperServiceDiscovery) clientProxyFactory.getServiceDiscovery();
             CuratorFramework zkClient = serviceDiscovery.getZkClient();
+            //ZkClient zkClient = serviceDiscovery.getZkClient();
             ServiceDiscoveryCache.SERVICE_CLASS_NAMES.forEach(name -> {
                 String servicePath = RpcConstant.ZK_SERVICE_PATH + RpcConstant.PATH_DELIMITER + name + RpcConstant.PATH_DELIMITER + "service";
                 PathChildrenCache pathChildrenCache = new PathChildrenCache(zkClient, servicePath, true);
@@ -134,16 +139,11 @@ public class RpcProcessor implements ApplicationListener<ContextRefreshedEvent> 
                     @Override
                     public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent pathChildrenCacheEvent) throws Exception {
                         String path = pathChildrenCacheEvent.getData().getPath();
-                        logger.debug("Child change parentPath:[{}] -- event:[{}]", path, pathChildrenCacheEvent);
+                        logger.info("Child change parentPath:[{}] -- event:[{}]", path, pathChildrenCacheEvent);
                         String[] arr = path.split(RpcConstant.PATH_DELIMITER);
                         ServiceDiscoveryCache.removeAll(arr[2]);
                     }
                 });
-                try {
-                    pathChildrenCache.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             });
             logger.info("subscribe service zk node successfully");
         }

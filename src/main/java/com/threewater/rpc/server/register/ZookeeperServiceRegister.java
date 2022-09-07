@@ -22,9 +22,11 @@ public class ZookeeperServiceRegister extends DefaultServiceRegister {
 
     private final CuratorFramework zkClient;
 
-    public ZookeeperServiceRegister(String zkAddress, Integer port, String protocol, Integer weight) {
+    public ZookeeperServiceRegister(String zkAddress, Integer port, String protocol, Integer weight) throws InterruptedException {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(3000, 10);
         zkClient = CuratorFrameworkFactory.newClient(zkAddress, retryPolicy);
+        zkClient.start();
+        zkClient.blockUntilConnected();
         this.port = port;
         this.protocol = protocol;
         this.weight = weight;

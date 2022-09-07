@@ -74,4 +74,8 @@ public class NettyRpcServerHandler extends ChannelInboundHandlerAdapter {
         logger.error("Exception occurred:{}", cause.getMessage());
         ctx.close();
     }
+
+    public void setRequestHandler(RequestHandler requestHandler) {
+        this.requestHandler = requestHandler;
+    }
 }

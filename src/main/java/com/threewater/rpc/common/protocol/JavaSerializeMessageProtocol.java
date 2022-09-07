@@ -1,9 +1,7 @@
 package com.threewater.rpc.common.protocol;
 
 import com.threewater.rpc.annotation.MessageProtocolAno;
-import com.threewater.rpc.common.constants.LoadBalanceConstant;
 import com.threewater.rpc.common.constants.MessageProtocolConstant;
-import com.threewater.rpc.common.constants.RpcConstant;
 import com.threewater.rpc.common.entity.RpcRequest;
 import com.threewater.rpc.common.entity.RpcResponse;
 
@@ -28,7 +26,7 @@ public class JavaSerializeMessageProtocol implements MessageProtocol {
 
     @Override
     public byte[] encodeResponse(RpcResponse response) throws Exception {
-        return new byte[0];
+        return this.serialize(response);
     }
 
     @Override

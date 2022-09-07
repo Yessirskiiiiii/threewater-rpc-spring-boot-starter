@@ -60,10 +60,10 @@ public class NettyRpcClient implements RpcClient {
 
         String address = service.getAddress();
         synchronized (address) {
-            // 请求地址（ip+port）如果在 connectedServerNodes 中存在则使用 connectedServerNodes 中的 handler 处理不再重新建立连接
+            // 请求地址（ip + port）如果在 connectedServerNodes 中存在则使用 connectedServerNodes 中的 handler 处理不再重新建立连接
             if (connectedServerNodes.containsKey(address)) {
                 NettyRpcClientHandler handler = connectedServerNodes.get(address);
-                logger.info("使用现有的连接");
+                logger.info("使用现有的连接..........");
                 return handler.sendRequest(rpcRequest);
             }
             // 不存在则建立新的连接，并将地址和 handler 缓存到 connectedServerNodes 中方便复用

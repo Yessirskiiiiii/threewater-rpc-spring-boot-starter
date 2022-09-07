@@ -11,7 +11,6 @@ import java.util.Objects;
  */
 @Getter
 @Setter
-@ToString
 public class Service {
 
     /**
@@ -33,6 +32,16 @@ public class Service {
      * 权重，越大优先级越高
      */
     private Integer weight;
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "name='" + name + '\'' +
+                ", protocol='" + protocol + '\'' +
+                ", address='" + address + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
