@@ -1,1 +1,3 @@
 com.threewater.rpc.common.protocol.JavaSerializeMessageProtocol
+com.threewater.rpc.common.protocol.KryoMessageProtocol
+com.threewater.rpc.common.protocol.ProtoBufMessageProtocol

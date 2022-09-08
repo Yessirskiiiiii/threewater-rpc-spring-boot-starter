@@ -15,4 +15,14 @@ public class MessageProtocolConstant {
      */
     public static final String PROTOCOL_JAVA = "java";
 
+    /**
+     * Kryo 序列化协议
+     */
+    public static final String PROTOCOL_KRYO = "kryo";
+
+    /**
+     * Protobuf 序列化协议
+     */
+    public static final String PROTOCOL_PROTOBUF = "protobuf";
+
 }

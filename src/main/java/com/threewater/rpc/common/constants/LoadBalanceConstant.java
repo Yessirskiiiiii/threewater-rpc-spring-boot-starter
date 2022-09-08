@@ -15,4 +15,19 @@ public class LoadBalanceConstant {
      */
     public static final String BALANCE_RANDOM = "random";
 
+    /**
+     * 负载均衡算法：轮询
+     */
+    public static final String BALANCE_ROUND = "round";
+
+    /**
+     * 负载均衡算法：加权轮询
+     */
+    public static final String BALANCE_WEIGHT_ROUND = "weightRound";
+
+    /**
+     * 负载均衡算法：平滑加权轮询
+     */
+    public static final String BALANCE_SMOOTH_WEIGHT_ROUND = "smoothWeightRound";
+
 }

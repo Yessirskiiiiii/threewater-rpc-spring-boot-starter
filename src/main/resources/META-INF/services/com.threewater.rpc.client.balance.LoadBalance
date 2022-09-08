@@ -1,1 +1,4 @@
 com.threewater.rpc.client.balance.RandomBalance
+com.threewater.rpc.client.balance.RoundBalance
+com.threewater.rpc.client.balance.WeightRoundBalance
+com.threewater.rpc.client.balance.SmoothWeightRoundBalance

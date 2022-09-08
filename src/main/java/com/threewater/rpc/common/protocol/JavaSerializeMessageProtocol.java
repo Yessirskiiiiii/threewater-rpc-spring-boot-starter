@@ -14,6 +14,7 @@ import java.io.*;
  */
 @MessageProtocolAno(value = MessageProtocolConstant.PROTOCOL_JAVA)
 public class JavaSerializeMessageProtocol implements MessageProtocol {
+
     @Override
     public byte[] encodeRequest(RpcRequest request) throws Exception {
         return this.serialize(request);
@@ -34,15 +35,19 @@ public class JavaSerializeMessageProtocol implements MessageProtocol {
         return (RpcResponse) this.deserialize(data);
     }
 
-    // 序列化
-    private byte[] serialize(Object o) throws IOException {
+    /**
+     * 序列化
+     */
+    private byte[] serialize(Object object) throws IOException {
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(bout);
-        out.writeObject(o);
+        out.writeObject(object);
         return bout.toByteArray();
     }
 
-    // 反序列化
+    /**
+     * 反序列化
+     */
     private Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data));
         return in.readObject();

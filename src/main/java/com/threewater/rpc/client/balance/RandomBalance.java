@@ -21,4 +21,5 @@ public class RandomBalance implements LoadBalance {
     public Service chooseOne(List<Service> services) {
         return services.get(random.nextInt(services.size()));
     }
+
 }

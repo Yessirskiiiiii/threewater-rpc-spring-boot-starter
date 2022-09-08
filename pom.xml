@@ -27,6 +27,9 @@
         <curator-recipes.version>5.3.0</curator-recipes.version>
         <fastjson.version>2.0.12</fastjson.version>
         <guava.version>31.1-jre</guava.version>
+        <kryo.version>4.0.2</kryo.version>
+        <protostuff-core.version>1.8.0</protostuff-core.version>
+        <protostuff-runtime.version>1.8.0</protostuff-runtime.version>
     </properties>
 
     <dependencies>
@@ -79,6 +82,23 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j-api.version}</version>
+        </dependency>
+        <!-- Kryo 序列化依赖 -->
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>kryo</artifactId>
+            <version>${kryo.version}</version>
+        </dependency>
+        <!-- Protostuff 序列化依赖 -->
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff-runtime.version}</version>
         </dependency>
     </dependencies>
 
