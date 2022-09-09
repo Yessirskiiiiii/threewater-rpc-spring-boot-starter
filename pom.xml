@@ -30,6 +30,7 @@
         <kryo.version>4.0.2</kryo.version>
         <protostuff-core.version>1.8.0</protostuff-core.version>
         <protostuff-runtime.version>1.8.0</protostuff-runtime.version>
+        <hessian.version>4.0.66</hessian.version>
     </properties>
 
     <dependencies>
@@ -99,6 +100,12 @@
             <groupId>io.protostuff</groupId>
             <artifactId>protostuff-runtime</artifactId>
             <version>${protostuff-runtime.version}</version>
+        </dependency>
+        <!-- Hessian 序列化依赖 -->
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>${hessian.version}</version>
         </dependency>
     </dependencies>
 

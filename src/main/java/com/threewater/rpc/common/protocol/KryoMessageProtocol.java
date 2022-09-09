@@ -49,7 +49,7 @@ public class KryoMessageProtocol implements MessageProtocol {
 
     @Override
     public RpcRequest decodeRequest(byte[] data) {
-        return (RpcRequest) this.deserialize(data);
+        return this.deserialize(data);
     }
 
     @Override
@@ -59,13 +59,13 @@ public class KryoMessageProtocol implements MessageProtocol {
 
     @Override
     public RpcResponse decodeResponse(byte[] data) {
-        return (RpcResponse) this.deserialize(data);
+        return this.deserialize(data);
     }
 
     /**
      * 序列化
      */
-    private byte[] serialize(Object object) {
+    private <T> byte[] serialize(T object) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         Output output = new Output(os);
         Kryo kryo = getInstance();
@@ -78,13 +78,13 @@ public class KryoMessageProtocol implements MessageProtocol {
     /**
      * 反序列化
      */
-    private Object deserialize(byte[] data) {
+    private <T> T deserialize(byte[] data) {
         ByteArrayInputStream is = new ByteArrayInputStream(data);
         Input input = new Input(is);
         Kryo kryo = getInstance();
         Object object = kryo.readClassAndObject(input);
         input.close();
-        return object;
+        return (T) object;
     }
 
 }

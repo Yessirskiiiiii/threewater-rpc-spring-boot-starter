@@ -25,4 +25,9 @@ public class MessageProtocolConstant {
      */
     public static final String PROTOCOL_PROTOBUF = "protobuf";
 
+    /**
+     * Hessian 序列化协议
+     */
+    public static final String PROTOCOL_HESSIAN = "hessian";
+
 }
