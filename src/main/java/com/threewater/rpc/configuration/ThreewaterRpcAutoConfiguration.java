@@ -121,7 +121,6 @@ public class ThreewaterRpcAutoConfiguration {
 
     /**
      * 使用 spi 匹配符合配置的负载均衡算法
-     *
      * @param name 用户在配置项填入的负载均衡算法名称
      * @return 负载均衡算法对象
      */

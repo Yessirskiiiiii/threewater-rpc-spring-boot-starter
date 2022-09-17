@@ -22,7 +22,7 @@ public class RoundBalance implements LoadBalance {
         if (index == services.size()) {
             index = 0;
         }
-        return services.get(index);
+        return services.get(index++);
     }
 
 }
